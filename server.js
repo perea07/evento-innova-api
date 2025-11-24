@@ -53,5 +53,5 @@ app.post("/sponsors", (req, res) => {
 
 const PORT = 4000;
 app.listen(PORT, () =>
-  console.log(`API corriendo en http://localhost:${PORT}`)
+  console.log(`API corriendo`)
 );
