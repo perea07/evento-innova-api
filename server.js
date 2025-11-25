@@ -14,8 +14,22 @@ app.use(express.json());
 // ---- LOAD JSON FILES ----
 const dataPath = (file) => path.join(__dirname, "data", file);
 
-const readJSON = (file) =>
-  JSON.parse(fs.readFileSync(dataPath(file), "utf8"));
+const readJSON = (file) => {
+  const fullPath = dataPath(file);
+
+  try {
+    const content = fs.readFileSync(fullPath, "utf8").trim();
+
+    // Si está vacío → devolver arreglo vacío
+    if (!content) return [];
+
+    return JSON.parse(content);
+
+  } catch (err) {
+    console.error(`Error leyendo ${file}:`, err);
+    return [];
+  }
+};
 
 const writeJSON = (file, data) =>
   fs.writeFileSync(dataPath(file), JSON.stringify(data, null, 2));
