@@ -51,6 +51,28 @@ app.post("/sponsors", (req, res) => {
   res.json({ message: "Sponsor agregado", data: req.body });
 });
 
+// Registrar un usuario
+app.post("/register", (req, res) => {
+  const users = readJSON("register.json");
+
+  const newUser = {
+    id: Date.now(),
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+    institution: req.body.institution,
+    createdAt: new Date().toISOString()
+  };
+
+  users.push(newUser);
+  writeJSON("register.json", users);
+
+  res.json({
+    message: "Usuario registrado correctamente",
+    data: newUser
+  });
+});
+
 const PORT = 4000;
 app.listen(PORT, () =>
   console.log(`API corriendo`)
